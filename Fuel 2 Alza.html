@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fuel Pro Calculator</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0f0f0f;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .card {
+    background: #1c1c1e;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 350px;
+    margin: auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  }
+
+  input {
+    width: 90%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+  }
+
+  button {
+    width: 45%;
+    padding: 12px;
+    margin: 8px 2%;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .calc {
+    background: #ff9500;
+    color: #000;
+  }
+
+  .reset {
+    background: #ff3b30;
+    color: #fff;
+  }
+
+  .result {
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>⛽ Fuel Pro Calculator</h2>
+
+  <input type="number" id="km" placeholder="Baki km (contoh: 424)">
+  <input type="number" id="kmPerL" placeholder="Km per liter (default: 11.19)" value="11.19">
+  <input type="number" id="price" placeholder="Harga seliter (RM)" value="1.99">
+  <input type="number" id="tank" placeholder="Kapasiti tangki (liter)" value="42">
+
+  <div>
+    <button class="calc" onclick="calculate()">Kira</button>
+    <button class="reset" onclick="reset()">Reset</button>
+  </div>
+
+  <div class="result" id="output"></div>
+</div>
+
+<script>
+function calculate() {
+  let km = parseFloat(document.getElementById("km").value);
+  let kmPerL = parseFloat(document.getElementById("kmPerL").value);
+  let price = parseFloat(document.getElementById("price").value);
+  let tank = parseFloat(document.getElementById("tank").value);
+
+  if (!km || !kmPerL || !price || !tank) {
+    document.getElementById("output").innerHTML = "Sila isi semua data";
+    return;
+  }
+
+  let usedLiter = km / kmPerL;
+  let needLiter = tank - usedLiter;
+  let needRM = needLiter * price;
+
+  document.getElementById("output").innerHTML = `
+    🔹 Penggunaan: ${usedLiter.toFixed(2)} liter <br>
+    🔹 Perlu tambah: ${needLiter.toFixed(2)} liter <br>
+    💰 Anggaran: RM ${needRM.toFixed(2)}
+  `;
+}
+
+function reset() {
+  document.getElementById("km").value = "";
+  document.getElementById("output").innerHTML = "";
+}
+</script>
+
+</body>
+</html>
